@@ -26,9 +26,18 @@ def get_subdistricts(amphoe_code: str, db: Session = Depends(get_db)):
     return [{"code": s.district_code, "district": s.district} for s in subdistricts]
 
 @router.get("/zipcode")
-def get_zipcode(district: str, db: Session = Depends(get_db)):
-    result = db.query(LRB_Distrcts.zipcode).filter(LRB_Distrcts.district == district).first()
-    return {"zipcode": result.zipcode if result else None}
+def get_zipcode(district_code: str, db: Session = Depends(get_db)):
+    result = db.query(
+        LRB_Distrcts.zipcode, LRB_Distrcts.district_code
+    ).filter(
+        LRB_Distrcts.district_code == district_code
+    ).first()
+    
+    if result:
+        return {"code": result.district_code, "zipcode": result.zipcode}
+    else:
+        return {"detail": "District not found"}
+
 
 @router.get("/detail/{district_id}", response_model=DistrictOut)
 def get_district_by_id(district_id: int, db: Session = Depends(get_db)):
