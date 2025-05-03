@@ -1,4 +1,4 @@
-from pydantic import BaseModel,Field
+from pydantic import BaseModel, Field, validator
 from typing import Optional
 from datetime import datetime, date
 from enum import Enum
@@ -15,9 +15,13 @@ class SubscribeBase(BaseModel):
     titel: Optional[str] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
+    age: Optional[int] = None
     birthday: Optional[date] = None
+    birth_day: Optional[int] = Field(None, ge=1, le=31)
+    birth_month: Optional[int] = Field(None, ge=1, le=12)
+    birth_year: Optional[int] = Field(None, ge=1900, le=datetime.now().year)
     profession: Optional[str] = None
-    status: Optional[StatusEnum] =  Field(default="wait")
+    status: Optional[StatusEnum] = Field(default="wait")
     tel: Optional[str] = None
     address: Optional[str] = None
     province: Optional[str] = None
@@ -29,7 +33,12 @@ class SubscribeBase(BaseModel):
     batch_number: Optional[int] = None
     signature_path: Optional[str] = None
     document_path: Optional[str] = None
-    
-class SignatureUpdate(BaseModel):
-    order_number: str
-    signature_path: str
+
+    # ✅ เพิ่มฟิลด์ใหม่ที่ใช้สร้าง address และส่งลง PDF
+    house_number: Optional[str] = None
+    village: Optional[str] = None
+    alley: Optional[str] = None
+    road: Optional[str] = None
+    subdistrict: Optional[str] = None
+    blood_group: Optional[str] = None
+    generation: Optional[int] = None

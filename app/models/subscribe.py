@@ -12,6 +12,7 @@ class LRBSubscribe(Base):
     titel = Column(String(10), nullable=True)
     first_name = Column(String(50), nullable=True)
     last_name = Column(String(50), nullable=True)
+    age = Column(Integer, nullable=True)
     birthday = Column(Date)
     profession = Column(String(50), nullable=True)
     status = Column(String(50), nullable=True)
@@ -26,3 +27,5 @@ class LRBSubscribe(Base):
     batch_number = Column(Integer, nullable=True)
     signature_path = Column(String(255), nullable=True)
     document_path = Column(String(255), nullable=True)
+
+
